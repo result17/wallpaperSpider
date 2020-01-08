@@ -17,33 +17,34 @@ function getImgs(targetObj) {
             timeout: 10000
         };
         var imgPath = getImgPath(item[0]);
-        var subP = new Promise(function (resolve, reject) {
-            axios_1["default"](config).then(function (response) {
-                response.data.pipe(fs.createWriteStream(imgPath).on('close', function () {
+        return axios_1["default"](config).then(function (response) {
+            return new Promise(function (resolve, reject) {
+                response.data.pipe(fs.createWriteStream(imgPath)
+                    .on('close', function () {
                     resolve();
-                }));
-            })["catch"](function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                }
-                else if (error.request) {
-                    console.log(error.request);
-                }
-                else {
-                    console.log('Error', error.message);
-                }
-                console.log(error.config);
-                fs.unlink(imgPath, function () {
-                    console.log('download error, delete the damaged picture!');
+                }))
+                    .on('error', function () {
+                    reject();
                 });
-                reject();
+            });
+        })["catch"](function (error) {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            }
+            else if (error.request) {
+                console.log(error.request);
+            }
+            else {
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
+            fs.unlink(imgPath, function () {
+                console.log('download error, delete the damaged picture!');
             });
         });
-        return subP;
     });
-    // bug
     return Promise.all(tasksAry);
 }
 exports["default"] = getImgs;
