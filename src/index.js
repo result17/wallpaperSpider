@@ -40,6 +40,7 @@ var getUrl_1 = require("./getUrl");
 var getRes_1 = require("./getRes");
 var toolFuncs_1 = require("./toolFuncs");
 var getHref_1 = require("./getHref");
+var saveImgs_1 = require("./saveImgs");
 var Resolution;
 (function (Resolution) {
     Resolution[Resolution["320x480"] = 0] = "320x480";
@@ -63,7 +64,7 @@ var Resolution;
     Resolution[Resolution["1920x1440"] = 18] = "1920x1440";
     Resolution[Resolution["2560x1440"] = 19] = "2560x1440";
 })(Resolution || (Resolution = {}));
-var select = '#main #article_content ul>li>a';
+var select = '#main #article__content ul>li>a';
 // command line
 var resolutionType = 19;
 var reg = toolFuncs_1.buildReg(Resolution[resolutionType]);
@@ -79,7 +80,12 @@ function main() {
                         throw new Error('url is not exist');
                     }
                     imgsHrefObj = getHref_1.getImgsHref(res.data, select, reg);
-                    console.log(imgsHrefObj);
+                    return [4 /*yield*/, saveImgs_1["default"](imgsHrefObj)["catch"](function () {
+                            throw new Error('imgs download error');
+                        })];
+                case 2:
+                    _a.sent();
+                    console.log("imgs download commpelted, Total " + getHref_1.countHrefs + " wallpapers!");
                     return [2 /*return*/];
             }
         });

@@ -2,7 +2,8 @@ import url from './getUrl'
 import getResponse from './getRes'
 import { AxiosResponse } from 'axios'
 import { buildReg } from './toolFuncs'
-import {hrefObj, getImgsHref} from './getHref'
+import { countHrefs, hrefObj, getImgsHref } from './getHref'
+import getImgs from './saveImgs'
 
 enum Resolution {
   '320x480',
@@ -27,7 +28,7 @@ enum Resolution {
   '2560x1440'
 }
 
-const select: string = '#main #article_content ul>li>a'
+const select: string = '#main #article__content ul>li>a'
 // command line
 const resolutionType: number = 19
 const reg: RegExp = buildReg(Resolution[resolutionType])
@@ -39,6 +40,9 @@ async function main() {
     throw new Error('url is not exist')
   }
   const imgsHrefObj: hrefObj = getImgsHref(res.data, select, reg)
-  console.log(imgsHrefObj)
+  await getImgs(imgsHrefObj).catch((): void => {
+    throw new Error('imgs download error')
+  })
+  console.log(`imgs download commpelted, Total ${countHrefs} wallpapers!`)
 }
 main()

@@ -5,14 +5,24 @@ export interface hrefObj {
   [imgTitle: string]: string
 }
 
+let countHrefs: number = 0
+export { countHrefs }
+
 export function getImgsHref(html: string, selector: string, regexp: RegExp): hrefObj {
   const $: CheerioStatic = cheerio.load(html), result: hrefObj = {}
-  console.log(html.length)
-  $(selector).each((idx, ele) => {
+  $(selector).each((idx: number, ele: CheerioElement): void => {
     let href: string | undefined = $(ele).attr('href') 
     if (href && isMatchedImgsHref(regexp, href)) {
-      let title: string = $(ele).attr('title') + '.png'
-      result[title] = href
+      countHrefs++
+      let fileName: string = ''
+      let title: string | undefined = $(ele).attr('title')
+      if (!title) {
+        fileName += 'wallpaper'
+      } else {
+        fileName += title
+      }
+      fileName += '.png'
+      result[fileName] = href
     }
   })
   return result
