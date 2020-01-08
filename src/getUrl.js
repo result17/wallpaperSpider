@@ -16,13 +16,17 @@ var Months;
     Months[Months["november"] = 10] = "november";
     Months[Months["december"] = 11] = "december";
 })(Months || (Months = {}));
+// 01/07/2020, month begins with 0
+var curData = moment().format('l').split('/').map(function (it) { return Number(it); });
+var month = curData[0] - 1;
+var curYear = curData[2];
+exports.curYear = curYear;
+var curMonth = curData[0];
+exports.curMonth = curMonth;
 function getUrl() {
-    // 01/07/2020
-    var curData = moment().format('l').split('/').map(function (it) { return Number(it); });
-    // month begins with 0
-    var curMonth = curData[0] - 1, curYear = curData[2];
-    var lastMonth = curMonth > 0 ? curMonth : 12, year = curMonth > 0 ? curYear : curYear - 1;
+    var lastMonth = month > 0 ? curMonth : 12, year = month > 0 ? curYear : curYear - 1;
     // 'https://www.smashingmagazine.com/2019/12/desktop-wallpaper-calendars-january-2020/'
-    return "https://www.smashingmagazine.com/" + year + "/" + lastMonth + "/desktop-wallpaper-calendars-" + Months[curMonth] + "-" + curYear;
+    return "https://www.smashingmagazine.com/" + year + "/" + lastMonth + "/desktop-wallpaper-calendars-" + Months[month] + "-" + curYear;
 }
-exports["default"] = getUrl();
+var htmlUrl = getUrl();
+exports.htmlUrl = htmlUrl;

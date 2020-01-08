@@ -1,4 +1,4 @@
-import url from './getUrl'
+import { htmlUrl } from './getUrl'
 import getResponse from './getRes'
 import { AxiosResponse } from 'axios'
 import { buildReg } from './toolFuncs'
@@ -35,7 +35,7 @@ const reg: RegExp = buildReg(Resolution[resolutionType])
 
 async function main() {
   // await return Promise.resolve() or Promise.reject()
-  const res: AxiosResponse | void = await getResponse(url)
+  const res: AxiosResponse | void = await getResponse(htmlUrl)
   if (!res) {
     throw new Error('url is not exist')
   }

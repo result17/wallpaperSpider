@@ -31,4 +31,13 @@ npm install -D @types/cheerio
 ```
 https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/cheerio/index.d.ts
 ## npmtrend网站
-此网站可以用图标只管反应npm包的下载量
+此网站可以用图标直观反映npm包的下载量
+## promise problem
+https://github.com/result17/blog/blob/master/others/promiseProblem.md
+## 总结
+对于没有验证，没有鉴权的网站，写node爬虫是比较简单。这次为了联系刚学会的ts，所以爬虫也用了ts写，但对于此种“一次性”代码，是没有必要的。
+项目的难点也变成ts的合理使用，有点画蛇添足。不过ts对于项目而言是非常有必要的（ts是有难度的，但也是强大的），搭配合理有意义的命名甚至可以做到不用写注释。
+而选用axios，单纯是因为对它稍有运用和基于promise的特点，对于node端选用体积更小的request库是更好的选择。
+## to do
+- 命令行的分辨率选择提示
+- 进度条

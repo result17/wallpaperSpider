@@ -73,7 +73,7 @@ function main() {
         var res, imgsHrefObj;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, getRes_1["default"](getUrl_1["default"])];
+                case 0: return [4 /*yield*/, getRes_1["default"](getUrl_1.htmlUrl)];
                 case 1:
                     res = _a.sent();
                     if (!res) {
