@@ -17,26 +17,33 @@ function getImgs(targetObj) {
             timeout: 10000
         };
         var imgPath = getImgPath(item[0]);
-        return axios_1["default"](config).then(function (response) {
-            response.data.pipe(fs.createWriteStream(imgPath));
-        })["catch"](function (error) {
-            if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-            }
-            else if (error.request) {
-                console.log(error.request);
-            }
-            else {
-                console.log('Error', error.message);
-            }
-            console.log(error.config);
-            fs.unlink(imgPath, function () {
-                console.log('download error, delete the damaged picture!');
+        var subP = new Promise(function (resolve, reject) {
+            axios_1["default"](config).then(function (response) {
+                response.data.pipe(fs.createWriteStream(imgPath).on('close', function () {
+                    resolve();
+                }));
+            })["catch"](function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                }
+                else if (error.request) {
+                    console.log(error.request);
+                }
+                else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+                fs.unlink(imgPath, function () {
+                    console.log('download error, delete the damaged picture!');
+                });
+                reject();
             });
         });
+        return subP;
     });
+    // bug
     return Promise.all(tasksAry);
 }
 exports["default"] = getImgs;
