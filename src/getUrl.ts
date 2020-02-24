@@ -21,7 +21,7 @@ const curYear: number = curData[2]
 const curMonth: number = curData[0]
 
 function getUrl():string {
-  const lastMonth: number = month > 0 ? curMonth : 12, year: number = month > 0 ? curYear : curYear - 1 
+  const lastMonth: string = month > 0 ? (curMonth - 1).toString().padStart(2, '0') : '12', year: number = month > 0 ? curYear : curYear - 1 
   // 'https://www.smashingmagazine.com/2019/12/desktop-wallpaper-calendars-january-2020/'
   return `https://www.smashingmagazine.com/${year}/${lastMonth}/desktop-wallpaper-calendars-${Months[month]}-${curYear}` 
 }

@@ -24,7 +24,7 @@ exports.curYear = curYear;
 var curMonth = curData[0];
 exports.curMonth = curMonth;
 function getUrl() {
-    var lastMonth = month > 0 ? curMonth : 12, year = month > 0 ? curYear : curYear - 1;
+    var lastMonth = month > 0 ? (curMonth - 1).toString().padStart(2, '0') : '12', year = month > 0 ? curYear : curYear - 1;
     // 'https://www.smashingmagazine.com/2019/12/desktop-wallpaper-calendars-january-2020/'
     return "https://www.smashingmagazine.com/" + year + "/" + lastMonth + "/desktop-wallpaper-calendars-" + Months[month] + "-" + curYear;
 }
